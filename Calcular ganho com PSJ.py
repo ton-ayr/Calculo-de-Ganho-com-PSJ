@@ -31,8 +31,8 @@ def calcular_ganhos(valor_base, parcelas):
     }
 
 
-valor_venda = 20.00  # Valor inicial da venda
-parcelas = 4  # Número de parcelas
+valor_venda = 20.00
+parcelas = 4
 resultado = calcular_ganhos(valor_venda, parcelas)
 
 print("Resultado do cálculo:")
