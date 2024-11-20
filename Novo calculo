@@ -1,0 +1,71 @@
+def calcular_ganhos(valor_base, parcelas):
+    # Tabela de taxas de parcelamento por quantidade de parcelas
+    taxas_parcelamento = {
+        1: 0.0000,
+        2: 0.037691,
+        3: 0.0498315,
+        4: 0.061768,
+        5: 0.073503,
+        6: 0.085041,
+        7: 0.096387,
+        8: 0.107542,
+        9: 0.118512,
+        10: 0.129299,
+        11: 0.139907,
+        12: 0.150339,
+    }
+
+    # Validar o número de parcelas
+    if parcelas not in taxas_parcelamento:
+        raise ValueError("Número de parcelas deve estar entre 1 e 12.")
+
+    taxa_venda = 0.049
+    produtor_percentual = 0.72
+    parceiro_percentual = 0.18
+
+    taxa_parcelamento_mensal = taxas_parcelamento[parcelas]
+
+    # Calcula o valor da venda com os juros
+    valor_venda_com_juros = valor_base * (1 + taxa_parcelamento_mensal)
+    taxa_parcelamento_total = valor_venda_com_juros - valor_base
+
+    # Calcula a taxa da venda
+    valor_taxa_venda = valor_base * taxa_venda
+    taxa_da_venda_total = valor_taxa_venda + 1.00
+
+    # Calcula ganho total
+    ganho_total = valor_base - taxa_da_venda_total
+
+    # Ganho bruto antes das taxas de parcelamento
+    ganho_produtor_bruto = ganho_total * produtor_percentual
+    ganho_parceiro_bruto = ganho_total * parceiro_percentual
+
+    # Calcula taxa de parcelamento entre parceiros
+    taxa_parcelamento_produtor = taxa_parcelamento_total * produtor_percentual
+    taxa_parcelamento_parceiro = taxa_parcelamento_total * parceiro_percentual
+
+    # Calcula ganho final
+    ganho_final_produtor = ganho_produtor_bruto - taxa_parcelamento_produtor
+    ganho_final_parceiro = ganho_parceiro_bruto - taxa_parcelamento_parceiro
+
+    return {
+        "Valor da venda": valor_base,
+        "Valor da venda com juros": round(valor_venda_com_juros, 2),
+        "Taxa de parcelamento": round(taxa_parcelamento_total, 2),
+        "Taxa da venda": round(taxa_da_venda_total, 2),
+        "Ganho bruto do Produtor": round(ganho_produtor_bruto, 2),
+        "Ganho bruto do Parceiro": round(ganho_parceiro_bruto, 2),
+        "Taxa de parcelamento do Produtor": round(taxa_parcelamento_produtor, 2),
+        "Taxa de parcelamento do Parceiro": round(taxa_parcelamento_parceiro, 2),
+        "Ganho final do Produtor": round(ganho_final_produtor, 2),
+        "Ganho do Parceiro": round(ganho_final_parceiro, 2),
+    }
+
+
+valor_venda = 1164.00
+parcelas = 12
+resultado = calcular_ganhos(valor_venda, parcelas)
+
+print("Resultado do cálculo:")
+for chave, valor in resultado.items():
+    print(f"{chave}: R$ {valor}")
